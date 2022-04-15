@@ -1,9 +1,8 @@
 <template>
     <div id="viewer">
-        <div v-html="convertedmd" id="file">
+        <div v-html="convertedmd" id="markdown">
         </div>
     </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -38,16 +37,11 @@
 <style scoped lang="scss">
 #viewer {
     padding: 1in;
-    width: 210mm;
+    width: 100%;
     overflow-x: hidden;
-    height: 297mm;
+    overflow-y: auto;
     word-wrap: break-word;
-    margin: 2rem auto;
     box-shadow: 0 0 15px rgba(black, 0.1);
-    border-radius: 2mm;
 
-}
-#file {
-    outline: none;
 }
 </style>

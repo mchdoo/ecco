@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import Vue from 'vue'
-import Button from '@/components/Button.vue';
+import { ref } from 'vue'
+import NewFileModal from '@/components/NewFileModal.vue'
+
+const modalOpen = ref(false);
 </script>
 
-
 <template>
+
+  <NewFileModal @clickedClose="modalOpen = false" :isOpen="modalOpen"/>
+
   <div class="start">
     <h1>Proyectos</h1>
     <p class="dimmed">O podés crear uno nuevo...</p>
-    <router-link to="/editor"><Button primary style="margin-right: 20px;">+ Nuevo proyecto</Button></router-link>
-    <Button>Abrir existente</Button>
-    <div class="proyectos">
-    </div>
+    <Button @click="modalOpen = true" primary><fai icon="plus"/> Nuevo proyecto</Button>
+    <Button><fai icon="folder-open"/> Abrir existente</Button>
+    <div class="proyectos"></div>
   </div>
 </template>
 

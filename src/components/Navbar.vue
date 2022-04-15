@@ -1,18 +1,35 @@
 <template>
     <nav class="navbar">
+        <router-link to="/">
+            <Button icon>
+                <fai icon="arrow-left" />
+            </Button>
+        </router-link>
         <input class="doc-title" v-model="title">
+        
+        <div>
+            <Button icon>
+                <fai icon="download"/>
+            </Button>
+            <Button icon>
+                <fai icon="arrow-up-right-from-square"/>
+            </Button>
+            <Button icon>
+                <fai icon="gear"/>
+            </Button>
+        </div>
     </nav>
 </template>
 
 <script lang="ts" setup>
-    import {computed, ref} from 'vue'
+    import Button from '@/components/Button.vue';
+    import {ref} from 'vue'
 
-    const title = ref('NuevoDocumento')
+    const title = ref('nuevo_doc')
 </script>
 
 <style lang="scss" scoped>
 .navbar {
-    overflow: hidden;
     background-color: white;
     height: 60px;
     width: 100vw;
@@ -21,6 +38,7 @@
     left: 0;
     display: flex;
     align-content: center;
+    justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
     box-shadow: 0 0 10px rgba(#000, 0.1);
@@ -28,7 +46,9 @@
 
     .doc-title {
         outline: none;
+        width: fit-content;
         border: none;
+        text-align: center;
         font-family: inherit;
         color: rgba(black, 0.5);
         font-weight: 600;
