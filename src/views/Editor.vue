@@ -1,26 +1,57 @@
 <script setup lang="ts">
 import Navbar from '@/components/Navbar.vue'
 import Viewer from '@/components/Viewer.vue'
+import { onMounted, ref } from 'vue';
+import {EditorView, EditorState, basicSetup} from '@codemirror/basic-setup'
+import {markdown, markdownLanguage} from '@codemirror/lang-markdown'
+import {keymap} from '@codemirror/view'
+import {defaultHighlightStyle} from '@codemirror/highlight'
+import { defaultKeymap, indentWithTab } from '@codemirror/commands'
+import { pedrito, highlighter } from '../assets/codemirror'
+// import CodeMirror from 'codemirror'
 
-import { EditorView, EditorState } from '@codemirror/basic-setup'
-import { ref } from 'vue';
+const editor = ref()
+const props = defineProps<{doc: string}>()
 
+let doctitle = props.doc.toString().split('_').join(' ')
+doctitle = doctitle[0].toUpperCase() + doctitle.slice(1) 
 
-let editor = new EditorView({
-    state: EditorState.create({doc: "SI DASJDHASDkjh"}),
-    parent: document.body
+let header = ref()
+    const md = ref('si')
+
+const codeState = EditorState.create({
+    doc: md.value,
+    extensions: [
+        markdown({
+            base: markdownLanguage,
+            addKeymap: true,
+        }),
+        pedrito,
+        highlighter,
+        keymap.of([indentWithTab]),
+        keymap.of(defaultKeymap),
+        basicSetup,
+        defaultHighlightStyle.fallback
+    ],
 })
 
-let markdown = ref(`# Titulo del documento`);
+onMounted(() => {
 
+    const code = new EditorView({
+        state: codeState,
+        parent: editor.value,
+    })
+
+    document.title = `ECCO - ${props.doc}`
+})
 </script>
 
 <template>
-    <Navbar/>
-    
-    <div ref="editorView" class="editor">
-        <textarea @keydown.tab.prevent v-model="markdown" id="editor"></textarea>
-        <Viewer :markdown="markdown"/>
+    <Navbar :title="doc"/>
+    <div class="editor">
+        <!-- <textarea ref="editor" @input="closeInput" @keydown.tab.prevent v-model="md" id="editor"></textarea> -->
+        <div ref="editor" id="editor" />
+        <Viewer :markdown="md"/>
     </div>
 </template>
 
@@ -34,17 +65,11 @@ let markdown = ref(`# Titulo del documento`);
 
 
 #editor {
-    resize: none;
-    padding: 3rem;
     box-sizing: border-box;
     min-width: 40vw;
     height: 100%;
-    background-color: #e5e5e5;
     border: none;
     outline: none;
     font-size: 1rem;
-    font-family: 'Source Code Pro', monospace;
-    font-weight: 500;
-
 }
 </style>

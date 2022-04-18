@@ -1,14 +1,12 @@
 <template>
     <nav class="navbar">
-        <router-link to="/">
-            <Button icon>
-                <fai icon="arrow-left" />
-            </Button>
-        </router-link>
-        <input class="doc-title" v-model="title">
+        <Button @click="handleHome" icon>
+            <fai icon="arrow-left" />
+        </Button>
+        <div class="doc-title" >{{title}}</div>
         
         <div>
-            <Button icon>
+            <Button @click="downloadPDF" icon>
                 <fai icon="download"/>
             </Button>
             <Button icon>
@@ -24,8 +22,23 @@
 <script lang="ts" setup>
     import Button from '@/components/Button.vue';
     import {ref} from 'vue'
+    import {useRouter} from 'vue-router';
 
-    const title = ref('nuevo_doc')
+    const router = useRouter()
+
+
+    interface Props {
+        title: string
+    }
+    const props = defineProps<Props>()
+
+    const handleHome = () => {
+        window.confirm('Seguro que querés volver? Los cambios no se han guardado.') && router.replace({path: '/', replace: true})
+    }
+
+    const downloadPDF = () =>  {
+        
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -45,20 +58,12 @@
     border-bottom: 1px solid #ddd;
 
     .doc-title {
-        outline: none;
         width: fit-content;
-        border: none;
-        text-align: center;
-        font-family: inherit;
+        user-select: none;
         color: rgba(black, 0.5);
         font-weight: 600;
-        font-size: 1rem;
-        border-radius: 5px;
-        padding: 0 10px;
-
-        &:focus {
-            background-color: #f5f5f5;
-        }
+        display: grid;
+        place-items: center;
     }
 }
 </style>

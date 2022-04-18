@@ -5,7 +5,7 @@ import Editor from '@/views/Editor.vue'
 
 const routes = [
     {path: '/', name: 'Start', component: Start},
-    {path: '/editor/:doc', name: 'Editor', component: Editor},
+    {path: '/editor/:doc', name: 'Editor', component: Editor, props: true},
     {path: '/editor', name: 'Edit', component: Editor}
 ]
 

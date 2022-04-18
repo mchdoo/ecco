@@ -4,10 +4,13 @@
             <div class="modal-body">
                 <h2>Crear un nuevo archivo</h2>
 
-                <input placeholder="Titulo del documento" id="doc-title" type="text">
+                <input autocomplete="off" v-model="doctitle" placeholder="Titulo del documento" id="doc-title" type="text">
                 <div style="display: flex; flex-direction: row; flex-grow: grow;">
-                    <Button fill primary> <fai icon="check" /> Crear</Button>
-                    <Button fill @click="emit('clickedClose')" > Cancelar</Button>
+                    <Button fill @click="handleCrear" primary> <fai icon="check" /> Crear</Button>
+                    <Button fill @click="() => {
+                        emit('clickedClose')
+                        doctitle = ''
+                    }" > Cancelar</Button>
                 </div>
             </div>
         </div>
@@ -17,8 +20,23 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import {useRouter} from 'vue-router'
+import slugify from 'slugify'
+
+const router = useRouter()
 
 defineProps<{isOpen: boolean}>()
+
+const doctitle = ref('')
+
+const handleCrear = ()=> {
+    router.replace({path: `/editor/${slugify(doctitle.value, {
+        replacement: '_',
+        remove: /[*+~.()'"!:@]/g,
+        lower: true,
+        strict: true,
+    })}`, replace: true})
+}
 
 const emit = defineEmits<{
     (e: 'clickedClose'): void 
@@ -43,6 +61,7 @@ const emit = defineEmits<{
         border-radius: 10px;
         padding: 2rem;
         margin: 5rem auto;
+        box-shadow: 0 5px 40px #0005;
 
         #doc-title {
             font-family: inherit;
@@ -55,10 +74,20 @@ const emit = defineEmits<{
             outline: none;
             margin: 1rem 0;
 
+            transition: 200ms ease;
+
+            &:hover{
+                border: 1px solid #668ac5;
+
+            }
+
             &:focus {
-                border: 1px solid darkcyan;
+                border: 1px solid #668ac5;
                 background-color: transparent;
                 color: black;
+                // outline: 3px solid rgba(#668ac5, 0.5);
+                transform: scale(1.02);
+                box-shadow: 0 5px 20px #0002;
             }
         }
 

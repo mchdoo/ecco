@@ -32,3 +32,7 @@ html {
 .dimmed {
     opacity: 0.5;
 }
+
+.cm-editor .cm-focused {
+    outline: none;
+}
