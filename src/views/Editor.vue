@@ -6,8 +6,9 @@ import {EditorView, EditorState, basicSetup} from '@codemirror/basic-setup'
 import {markdown, markdownLanguage} from '@codemirror/lang-markdown'
 import {keymap} from '@codemirror/view'
 import {defaultHighlightStyle} from '@codemirror/highlight'
-import { defaultKeymap, indentWithTab } from '@codemirror/commands'
+import { indentWithTab } from '@codemirror/commands'
 import { pedrito, highlighter } from '../assets/codemirror'
+import { Transaction, Annotation } from '@codemirror/state';
 // import CodeMirror from 'codemirror'
 
 const editor = ref()
@@ -17,10 +18,10 @@ let doctitle = props.doc.toString().split('_').join(' ')
 doctitle = doctitle[0].toUpperCase() + doctitle.slice(1) 
 
 let header = ref()
-    const md = ref('si')
+let md = ref('# lol')
 
 const codeState = EditorState.create({
-    doc: md.value,
+    doc: 'lco',
     extensions: [
         markdown({
             base: markdownLanguage,
@@ -29,11 +30,11 @@ const codeState = EditorState.create({
         pedrito,
         highlighter,
         keymap.of([indentWithTab]),
-        keymap.of(defaultKeymap),
         basicSetup,
-        defaultHighlightStyle.fallback
+        defaultHighlightStyle.fallback,
     ],
 })
+console.log(md.value)
 
 onMounted(() => {
 
@@ -49,7 +50,7 @@ onMounted(() => {
 <template>
     <Navbar :title="doc"/>
     <div class="editor">
-        <!-- <textarea ref="editor" @input="closeInput" @keydown.tab.prevent v-model="md" id="editor"></textarea> -->
+        <!-- <textarea ref="editor" @keydown.tab.prevent v-model="md" id="editor"></textarea> -->
         <div ref="editor" id="editor" />
         <Viewer :markdown="md"/>
     </div>

@@ -56,6 +56,7 @@
     box-sizing: border-box;
     box-shadow: 0 0 10px rgba(#000, 0.1);
     border-bottom: 1px solid #ddd;
+    z-index: 500;
 
     .doc-title {
         width: fit-content;

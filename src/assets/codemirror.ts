@@ -6,12 +6,24 @@ export const pedrito = EditorView.theme({
     "&": {
         height: '100%',
         border: 'none',
-        "&:focus": {
-            outline: 'none'
-        }
+        backgroundColor: '#eee',
+        borderRight: "1px solid #ddd",
     },
     ".cm-content": {
         fontFamily: 'Roboto Mono, monospace',
+        padding: 0,
+    },
+    ".cm-activeLine": {
+        backgroundColor: '#e5e5e5'
+    },
+    ".cm-activeLineGutter": {
+        backgroundColor: '#eee'
+    },
+    ".cm-gutter": {
+        backgroundColor: '#eee',
+        "&.cm-lineNumbers": {
+            minWidth: '2rem'
+        }
     }
 })
 
